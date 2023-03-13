@@ -7,15 +7,25 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "project": "apps/ssrapp/project.json",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/apps/ssrapp",
+        "outputPath": "dist/ssrapp/browser",
         "index": "apps/ssrapp/src/index.html",
         "main": "apps/ssrapp/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/ssrapp/tsconfig.app.json",
-        "assets": ["apps/ssrapp/src/favicon.ico", "apps/ssrapp/src/assets"],
-        "styles": ["apps/ssrapp/src/styles.css"],
+        "assets": [
+          "apps/ssrapp/src/favicon.ico",
+          "apps/ssrapp/src/assets"
+        ],
+        "styles": [
+          "apps/ssrapp/src/styles.css"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -65,14 +75,21 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/ssrapp/**/*.ts", "apps/ssrapp/**/*.html"]
+        "lintFilePatterns": [
+          "apps/ssrapp/**/*.ts",
+          "apps/ssrapp/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/ssrapp/jest.config.ts",
         "passWithNoTests": true
@@ -83,6 +100,59 @@
           "codeCoverage": true
         }
       }
+    },
+    "server": {
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/ssrapp/server",
+        "main": "apps/ssrapp/server.ts",
+        "tsConfig": "apps/ssrapp/tsconfig.server.json"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media"
+        },
+        "development": {
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@nguniversal/builders:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "ssrapp:build:development",
+          "serverTarget": "ssrapp:server:development"
+        },
+        "production": {
+          "browserTarget": "ssrapp:build:production",
+          "serverTarget": "ssrapp:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@nguniversal/builders:prerender",
+      "options": {
+        "routes": [
+          "/"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "ssrapp:build:production",
+          "serverTarget": "ssrapp:server:production"
+        },
+        "development": {
+          "browserTarget": "ssrapp:build:development",
+          "serverTarget": "ssrapp:server:development"
+        }
+      },
+      "defaultConfiguration": "production"
     }
   },
   "tags": []

@@ -2,7 +2,12 @@
   "name": "ssrrepo",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev:ssr": "ng run ssrapp:serve-ssr",
+    "serve:ssr": "node dist/ssrapp/server/main.js",
+    "build:ssr": "ng build && ng run ssrapp:server",
+    "prerender": "ng run ssrapp:prerender"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~15.2.0",
@@ -12,8 +17,11 @@
     "@angular/forms": "~15.2.0",
     "@angular/platform-browser": "~15.2.0",
     "@angular/platform-browser-dynamic": "~15.2.0",
+    "@angular/platform-server": "~15.2.0",
     "@angular/router": "~15.2.0",
+    "@nguniversal/express-engine": "^15.2.0",
     "@nrwl/angular": "15.8.6",
+    "express": "^4.15.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
@@ -28,6 +36,7 @@
     "@angular/cli": "~15.2.0",
     "@angular/compiler-cli": "~15.2.0",
     "@angular/language-service": "~15.2.0",
+    "@nguniversal/builders": "^15.2.0",
     "@nrwl/cypress": "15.8.6",
     "@nrwl/eslint-plugin-nx": "15.8.6",
     "@nrwl/jest": "15.8.6",
@@ -35,6 +44,7 @@
     "@nrwl/linter": "15.8.6",
     "@nrwl/workspace": "15.8.6",
     "@schematics/angular": "~15.2.0",
+    "@types/express": "^4.17.0",
     "@types/jest": "^29.4.0",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
